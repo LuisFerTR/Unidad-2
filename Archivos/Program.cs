@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Archivos
 {
@@ -6,14 +7,20 @@ namespace Archivos
     {
         static void Main(string[] args)
         {
+            try
             {
+                using (Lexico0 l = new Lexico0())
+                {
+                    l.Encrypt();
+                    
+                }
                 
-                Lexico0 l = new Lexico0();
-                l.Display();
-                int x = 0;
-                x = 10;
+
             }
-            // x = 20;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

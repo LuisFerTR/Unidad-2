@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Archivos
 {
-    class Lexico0
+    class Lexico0 : IDisposable
     {
         private StreamReader archivo;
         private StreamWriter bitacora;
@@ -14,32 +14,26 @@ namespace Archivos
         { 
             Console.WriteLine("Compilando prueba.txt");
 
-            try
+            if (File.Exists("C:\\Archivos\\prueba.txt"))
             {
-                if (File.Exists("C:\\Archivos\\prueba.txt"))
-                {
-                    archivo = new StreamReader("C:\\Archivos\\prueba.txt");
-                    bitacora = new StreamWriter("C:\\Archivos\\prueba.log");
-                    bitacora.AutoFlush = true;
+                archivo = new StreamReader("C:\\Archivos\\prueba.txt");
+                bitacora = new StreamWriter("C:\\Archivos\\prueba.log");
+                bitacora.AutoFlush = true;
 
-                    bitacora.WriteLine("Archivo: prueba.txt");
-                    bitacora.WriteLine("Directorio: C:\\Archivos");
-                }
-                else
-                {
-                    throw new FileNotFoundException();
-                }
+                bitacora.WriteLine("Archivo: prueba.txt");
+                bitacora.WriteLine("Directorio: C:\\Archivos");
             }
-            catch(FileNotFoundException e)
+            else
             {
-                Console.WriteLine(e.Message);
+                throw new Exception("El archivo prueba.txt no existe.");
             }
+
         }
-        ~Lexico0()
+        //~Lexico0()
+        public void Dispose()
         {
             Console.WriteLine("Finaliza compilacion de prueba.txt");
-            CerrarArchivos();
-            Console.ReadKey();
+            CerrarArchivos();            
         }
 
         private void CerrarArchivos()
@@ -50,11 +44,33 @@ namespace Archivos
 
         public void Display()
         {
-            if (archivo != null)
+            while (!archivo.EndOfStream)
             {
-                while (!archivo.EndOfStream)
+                Console.Write((char)archivo.Read());
+            }   
+        }
+
+        public void Load()
+        {
+            while (!archivo.EndOfStream)
+            {
+                bitacora.Write((char)archivo.Read());
+            }
+        }
+
+        public void Encrypt()
+        {
+            while (!archivo.EndOfStream)
+            {
+                char c;
+
+                if (char.IsLetter(c = (char)(archivo.Read())))
                 {
-                    Console.Write((char)archivo.Read());
+                    bitacora.Write((char)(c + 1));
+                }
+                else
+                {
+                    bitacora.Write(c);
                 }
             }
         }
