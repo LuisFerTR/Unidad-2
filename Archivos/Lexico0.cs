@@ -64,7 +64,7 @@ namespace Archivos
             {
                 char c;
 
-                if (char.IsLetter(c = (char)(archivo.Read())))
+                if (char.IsLetter(c = (char)archivo.Read()))
                 {
                     bitacora.Write((char)(c + 1));
                 }
@@ -73,6 +73,40 @@ namespace Archivos
                     bitacora.Write(c);
                 }
             }
+        }
+
+        public void Palabra()
+        {
+            char c;
+            string palabra = "";
+
+            while (char.IsWhiteSpace(c = (char)archivo.Read()))
+            {
+                // Este ciclo busca el primer caracter válido
+            }
+
+            if (char.IsLetter(c))
+            {
+                // Encontró una letra
+                palabra += c;
+
+                while (char.IsLetter(c = (char)archivo.Read()))
+                {
+                    // Concatenar más letras para formar la palabra
+                    palabra += c;
+                }
+            }
+
+            if (palabra != "")
+            {
+                bitacora.WriteLine("Palabra = " + palabra);
+            }
+
+        }
+
+        public bool FinDeArchivo()
+        {
+            return archivo.EndOfStream;
         }
     }
 }

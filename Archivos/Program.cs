@@ -11,11 +11,12 @@ namespace Archivos
             {
                 using (Lexico0 l = new Lexico0())
                 {
-                    l.Encrypt();
-                    
-                }
-                
+                    while (!l.FinDeArchivo())
+                    {
+                        l.Palabra();
+                    }
 
+                }
             }
             catch (Exception e)
             {
