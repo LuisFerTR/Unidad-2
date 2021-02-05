@@ -11,10 +11,12 @@ namespace Archivos
             {
                 using (Lexico0 l = new Lexico0())
                 {
-                    while (!l.FinDeArchivo())
+                    /*while (!l.FinDeArchivo())
                     {
-                        l.Palabra();
-                    }
+                        l.Token();
+                    }*/
+
+                    l.Mosca('a');
 
                 }
             }

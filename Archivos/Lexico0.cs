@@ -50,6 +50,15 @@ namespace Archivos
             }   
         }
 
+        public void Display2()
+        {
+            while (!archivo.EndOfStream)
+            {
+                Console.Write((char)archivo.Peek());
+                archivo.Read();
+            }
+        }
+
         public void Load()
         {
             while (!archivo.EndOfStream)
@@ -75,7 +84,31 @@ namespace Archivos
             }
         }
 
-        public void Palabra()
+        public void Encrypt2()
+        {
+            while (!archivo.EndOfStream)
+            {
+                char c;
+
+                if (char.IsLetter(c = (char)archivo.Peek()))
+                {
+                    bitacora.Write((char)(c + 1));
+                }
+                else
+                {
+                    bitacora.Write(c);
+                }
+
+                archivo.Read();
+            }
+        }
+        public void Mosca(char letra)
+        {
+            // Reemplaza las vocales en el archivo por el argumento letra
+            
+        }
+
+        public void Token()
         {
             char c;
             string palabra = "";
@@ -85,23 +118,30 @@ namespace Archivos
                 // Este ciclo busca el primer caracter válido
             }
 
+            palabra += c;
+
             if (char.IsLetter(c))
             {
                 // Encontró una letra
-                palabra += c;
-
-                while (char.IsLetter(c = (char)archivo.Read()))
+                while (char.IsLetter(c = (char)archivo.Peek()))
                 {
                     // Concatenar más letras para formar la palabra
                     palabra += c;
+                    archivo.Read();
+                }
+            }
+            else if (char.IsDigit(c))
+            {
+                // Si no es letra es otro caracter
+                while (char.IsDigit(c = (char)archivo.Peek()))
+                {
+                    // Concatenar más letras para formar la palabra
+                    palabra += c;
+                    archivo.Read();
                 }
             }
 
-            if (palabra != "")
-            {
-                bitacora.WriteLine("Palabra = " + palabra);
-            }
-
+            bitacora.WriteLine("Token = " + palabra);  
         }
 
         public bool FinDeArchivo()
